@@ -1,0 +1,53 @@
+<svg width="1080" height="1350" viewBox="0 0 1080 1350" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="cardBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0B3D3A" />
+      <stop offset="100%" stop-color="#08201E" />
+    </linearGradient>
+    <linearGradient id="tideGlow" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#C6FF3D" />
+      <stop offset="100%" stop-color="#FF6B4A" />
+    </linearGradient>
+  </defs>
+
+  <rect x="36" y="36" width="1008" height="1278" rx="40" fill="url(#cardBg)" stroke="#EFE3C8" stroke-width="4" stroke-opacity="0.3" />
+
+  <path d="M 36 180 L 1044 180" stroke="#EFE3C8" stroke-width="3" stroke-dasharray="12 12" stroke-opacity="0.4" />
+  <circle cx="36" cy="180" r="24" fill="#0B3D3A" />
+  <circle cx="1044" cy="180" r="24" fill="#0B3D3A" />
+
+  <text x="80" y="115" font-family="'Clash Display', sans-serif" font-size="48" font-weight="700" fill="#EFE3C8">HH GOA 2026</text>
+  <text x="1000" y="115" font-family="'JetBrains Mono', monospace" font-size="22" fill="#C6FF3D" text-anchor="end" letter-spacing="2">PASS #GOA-8842</text>
+
+  <!-- Photo Area Cutout Frame -->
+  <rect x="80" y="230" width="920" height="640" rx="28" fill="none" stroke="url(#tideGlow)" stroke-width="6" />
+
+  <!-- Bottom Details Stub -->
+  <path d="M 36 930 L 1044 930" stroke="#EFE3C8" stroke-width="3" stroke-dasharray="12 12" stroke-opacity="0.4" />
+  <circle cx="36" cy="930" r="24" fill="#0B3D3A" />
+  <circle cx="1044" cy="930" r="24" fill="#0B3D3A" />
+
+  <text x="80" y="1010" font-family="'JetBrains Mono', monospace" font-size="20" fill="#EFE3C8" opacity="0.6">BUILDER TITLE</text>
+  <text x="80" y="1060" font-family="'Clash Display', sans-serif" font-size="42" font-weight="700" fill="#C6FF3D">ARAMBOL ARCHITECT</text>
+
+  <text x="80" y="1140" font-family="'JetBrains Mono', monospace" font-size="20" fill="#EFE3C8" opacity="0.6">LOCATION &amp; STACK</text>
+  <text x="80" y="1185" font-family="'JetBrains Mono', monospace" font-size="26" fill="#EFE3C8">ANJUNA BEACH • NEXT.JS • SOLANA</text>
+
+  <!-- Barcode Overlay Bottom Right -->
+  <g transform="translate(760, 1100)">
+    <rect x="0" y="0" width="8" height="80" fill="#EFE3C8" />
+    <rect x="14" y="0" width="4" height="80" fill="#EFE3C8" />
+    <rect x="24" y="0" width="12" height="80" fill="#EFE3C8" />
+    <rect x="42" y="0" width="6" height="80" fill="#EFE3C8" />
+    <rect x="54" y="0" width="16" height="80" fill="#EFE3C8" />
+    <rect x="76" y="0" width="4" height="80" fill="#EFE3C8" />
+    <rect x="86" y="0" width="10" height="80" fill="#EFE3C8" />
+    <rect x="102" y="0" width="14" height="80" fill="#EFE3C8" />
+    <rect x="122" y="0" width="6" height="80" fill="#EFE3C8" />
+    <rect x="134" y="0" width="18" height="80" fill="#EFE3C8" />
+    <rect x="158" y="0" width="4" height="80" fill="#EFE3C8" />
+    <rect x="168" y="0" width="10" height="80" fill="#EFE3C8" />
+    <rect x="184" y="0" width="12" height="80" fill="#EFE3C8" />
+    <text x="96" y="105" font-family="'JetBrains Mono', monospace" font-size="16" fill="#C6FF3D" text-anchor="middle">HH-GOA-2026</text>
+  </g>
+</svg>

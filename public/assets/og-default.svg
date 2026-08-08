@@ -1,0 +1,16 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#0B3D3A" />
+  <circle cx="1000" cy="150" r="300" fill="#FF6B4A" opacity="0.15" />
+  <circle cx="200" cy="500" r="250" fill="#C6FF3D" opacity="0.1" />
+
+  <rect x="60" y="60" width="1080" height="510" rx="32" fill="#08201E" fill-opacity="0.7" stroke="#EFE3C8" stroke-width="2" stroke-opacity="0.2" />
+
+  <text x="120" y="160" font-family="'JetBrains Mono', monospace" font-size="24" fill="#C6FF3D" letter-spacing="4">HH GOA 2026</text>
+  <text x="120" y="260" font-family="'Clash Display', sans-serif" font-size="72" font-weight="700" fill="#EFE3C8">BUILD YOUR FRAME</text>
+  <text x="120" y="330" font-family="'General Sans', sans-serif" font-size="32" fill="#EFE3C8" opacity="0.8">Beach hackathon builder cards &amp; avatar badges</text>
+
+  <g transform="translate(120, 420)">
+    <rect x="0" y="0" width="280" height="56" rx="28" fill="#FF6B4A" />
+    <text x="140" y="36" font-family="'Clash Display', sans-serif" font-size="20" font-weight="700" fill="#08201E" text-anchor="middle" letter-spacing="2">CREATE YOURS →</text>
+  </g>
+</svg>
