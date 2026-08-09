@@ -6,28 +6,48 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Design tokens — see lib/design-tokens.ts for the source of truth
-        monsoon: "#0B3D3A", // deep teal — primary background
-        sand: "#EFE3C8", // warm sand — surfaces / light text on dark
-        sunset: "#FF6B4A", // coral sunset — primary accent / CTAs
-        tide: "#C6FF3D", // bioluminescent lime — interactive highlight, used sparingly
-        ink: "#08201E" // near-black teal — body text on sand
+        // Sunrise Signal palette — official HH Goa 2026 design system
+        "deep-tide": "#062B1F", // near-black green, primary background
+        "signal-green": "#0B6839", // brand accent green, primary CTAs and focus states
+        "sunrise-coral": "#FF6F4C", // animated gradient pair — coral sweep
+        "sunrise-gold": "#FFC24B", // animated gradient pair — gold sweep
+        foam: "#E8F3EC", // light text/surfaces on dark
+        "terminal-lime": "#7CFF6B", // glitch/terminal accent, kinetic type only
+
+        // Legacy / theme aliases for cross-compatibility
+        monsoon: "#062B1F",
+        sand: "#E8F3EC",
+        sunset: "#FF6F4C",
+        tide: "#7CFF6B",
+        ink: "#041B13"
       },
       fontFamily: {
-        display: ["var(--font-display)", "sans-serif"],
-        body: ["var(--font-body)", "sans-serif"],
-        mono: ["var(--font-mono)", "monospace"]
+        display: ["var(--font-display)", "Archivo Black", "Bebas Neue", "sans-serif"],
+        body: ["var(--font-body)", "Inter", "General Sans", "sans-serif"],
+        mono: ["var(--font-mono)", "JetBrains Mono", "Space Mono", "monospace"]
       },
       animation: {
-        "tide-wash": "tideWash 1.6s cubic-bezier(0.65,0,0.35,1) forwards"
+        "sunrise-sweep": "sunriseSweep 20s linear infinite",
+        "scan-line": "scanLine 1.1s cubic-bezier(0.4, 0, 0.2, 1) forwards",
+        "pulse-glow": "pulseGlow 2s ease-in-out infinite"
       },
       keyframes: {
-        tideWash: {
-          "0%": { transform: "translateY(100%)" },
-          "100%": { transform: "translateY(0%)" }
+        sunriseSweep: {
+          "0%": { backgroundPosition: "0% 50%" },
+          "50%": { backgroundPosition: "100% 50%" },
+          "100%": { backgroundPosition: "0% 50%" }
+        },
+        scanLine: {
+          "0%": { transform: "translateX(-100%)", opacity: "0.8" },
+          "100%": { transform: "translateX(100%)", opacity: "0" }
+        },
+        pulseGlow: {
+          "0%, 100%": { opacity: "0.4" },
+          "50%": { opacity: "0.9" }
         }
       }
     }
   },
   plugins: []
 } satisfies Config;
+

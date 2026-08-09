@@ -23,12 +23,13 @@ export function Toast({ message, onClose, duration = 3000 }: ToastProps) {
           initial={{ opacity: 0, y: 50, scale: 0.95 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 20, scale: 0.95 }}
-          className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3 rounded-full bg-ink/90 border border-tide/50 px-5 py-2.5 shadow-2xl backdrop-blur-md"
+          className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3 rounded-full bg-[#062B1F]/95 border border-[#7CFF6B]/50 px-5 py-3 shadow-[0_0_25px_rgba(11,104,57,0.5)] backdrop-blur-md"
         >
-          <span className="h-2 w-2 rounded-full bg-tide animate-pulse" />
-          <span className="font-mono text-xs text-sand font-medium">{message}</span>
+          <span className="h-2.5 w-2.5 rounded-full bg-[#7CFF6B] animate-pulse" />
+          <span className="font-mono text-xs text-[#E8F3EC] font-bold tracking-wide">{message}</span>
         </motion.div>
       )}
     </AnimatePresence>
   );
 }
+

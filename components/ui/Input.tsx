@@ -13,27 +13,28 @@ export function Input({ label, helperText, error, className, id, ...props }: Inp
   return (
     <div className="flex flex-col gap-1.5 w-full">
       {label && (
-        <label htmlFor={inputId} className="font-mono text-xs uppercase tracking-wider text-sand/80">
+        <label htmlFor={inputId} className="font-mono text-xs uppercase tracking-wider text-[#E8F3EC]/80">
           {label}
         </label>
       )}
       <input
         id={inputId}
         className={clsx(
-          "w-full rounded-xl bg-monsoon/80 border px-4 py-3 font-body text-sm text-sand placeholder:text-sand/40 transition-colors focus:outline-none focus:ring-2 focus:ring-tide focus:border-transparent",
-          error ? "border-sunset" : "border-sand/30 hover:border-sand/50",
+          "w-full rounded-xl bg-[#062B1F]/90 border px-4 py-3 font-mono text-sm text-[#E8F3EC] placeholder:text-[#E8F3EC]/40 transition-colors focus:outline-none focus:ring-2 focus:ring-[#7CFF6B] focus:border-transparent",
+          error ? "border-[#FF6F4C]" : "border-[#E8F3EC]/30 hover:border-[#FFC24B]",
           className
         )}
         {...props}
       />
       {helperText && !error && (
-        <span className="font-mono text-[10px] text-sand/50">{helperText}</span>
+        <span className="font-mono text-[10px] text-[#E8F3EC]/50">{helperText}</span>
       )}
       {error && (
-        <span role="alert" className="font-mono text-[11px] text-sunset">
+        <span role="alert" className="font-mono text-[11px] text-[#FF6F4C]">
           {error}
         </span>
       )}
     </div>
   );
 }
+

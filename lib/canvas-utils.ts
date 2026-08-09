@@ -1,5 +1,5 @@
 /**
- * Client-side compositing engine for HH Goa 2026.
+ * Client-side compositing engine for HH Goa 2026 — Sunrise Signal Edition.
  * Zero server compute, near-instant 60fps rendering, high-DPI crisp PNG exports.
  * Supports PFP Frame (1080x1080) and Builder ID Card (1080x1350) with perforated wristband motif.
  */
@@ -57,10 +57,71 @@ export function drawCover(
   ctx.restore();
 }
 
+/** Helper to draw Devanagari गोवा in thin gold linework alongside English wordmark */
+function drawDevanagariGoaMark(
+  ctx: CanvasRenderingContext2D,
+  x: number,
+  y: number,
+  scale = 1
+) {
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.scale(scale, scale);
+
+  // Thin gold linework styling (#FFC24B)
+  ctx.strokeStyle = "#FFC24B";
+  ctx.fillStyle = "#FFC24B";
+  ctx.lineWidth = 3;
+  ctx.lineCap = "round";
+  ctx.lineJoin = "round";
+
+  // Top Shirorekha (horizontal bar over Devanagari गोवा)
+  ctx.beginPath();
+  ctx.moveTo(0, 0);
+  ctx.lineTo(130, 0);
+  ctx.stroke();
+
+  // 'ग' (Ga)
+  ctx.beginPath();
+  ctx.moveTo(15, 0);
+  ctx.lineTo(15, 28);
+  ctx.arc(22, 28, 7, Math.PI, 0, false);
+  ctx.stroke();
+
+  ctx.beginPath();
+  ctx.moveTo(38, 0);
+  ctx.lineTo(38, 42);
+  ctx.stroke();
+
+  // 'ो' (Matra O) & 'व' (Va)
+  ctx.beginPath();
+  ctx.moveTo(70, 0);
+  ctx.lineTo(70, 42);
+  ctx.stroke();
+
+  ctx.beginPath();
+  ctx.arc(58, 24, 12, 0, Math.PI * 2);
+  ctx.stroke();
+
+  // Matra bar
+  ctx.beginPath();
+  ctx.moveTo(92, 0);
+  ctx.lineTo(92, 42);
+  ctx.stroke();
+
+  // Top Matra stroke
+  ctx.beginPath();
+  ctx.moveTo(92, 0);
+  ctx.quadraticCurveTo(80, -20, 72, -18);
+  ctx.stroke();
+
+  ctx.restore();
+}
+
 /** Helper to draw barcode lines on canvas */
 function drawBarcode(ctx: CanvasRenderingContext2D, x: number, y: number, height: number, code: string) {
   ctx.save();
-  ctx.fillStyle = "#EFE3C8";
+  ctx.fillStyle = "#E8F3EC";
   let currentX = x;
   const pattern = [4, 2, 8, 3, 10, 2, 6, 4, 12, 3, 5, 2, 8, 4, 14, 2, 6, 4, 10];
   for (let i = 0; i < pattern.length; i++) {
@@ -72,7 +133,7 @@ function drawBarcode(ctx: CanvasRenderingContext2D, x: number, y: number, height
   }
 
   ctx.font = "bold 16px 'JetBrains Mono', monospace";
-  ctx.fillStyle = "#C6FF3D";
+  ctx.fillStyle = "#7CFF6B";
   ctx.textAlign = "center";
   ctx.fillText(code, x + (currentX - x) / 2, y + height + 24);
   ctx.restore();
@@ -100,58 +161,79 @@ export async function compositePFPFrame(opts: {
       const overlay = await loadImage(opts.frameOverlaySrc);
       ctx.drawImage(overlay, 0, 0, size, size);
     } catch {
-      // Fallback to procedural vector overlay
+      // Procedural render fallback
     }
   }
 
-  // 3. Procedural Bioluminescent Wave Overlay Guarantee
+  // 3. Sunrise Signal Procedural Overlay
   ctx.save();
-  // Bottom gradient wave block
-  const waveGrad = ctx.createLinearGradient(0, size - 220, 0, size);
-  waveGrad.addColorStop(0, "rgba(8, 32, 30, 0)");
-  waveGrad.addColorStop(0.4, "rgba(8, 32, 30, 0.75)");
-  waveGrad.addColorStop(1, "rgba(8, 32, 30, 0.95)");
+
+  // Bottom gradient wave block (deep-tide transition)
+  const waveGrad = ctx.createLinearGradient(0, size - 280, 0, size);
+  waveGrad.addColorStop(0, "rgba(6, 43, 31, 0)");
+  waveGrad.addColorStop(0.35, "rgba(6, 43, 31, 0.82)");
+  waveGrad.addColorStop(1, "rgba(6, 43, 31, 0.98)");
 
   ctx.fillStyle = waveGrad;
-  ctx.fillRect(0, size - 260, size, 260);
+  ctx.fillRect(0, size - 320, size, 320);
 
-  // Bioluminescent wave arc
-  const arcGrad = ctx.createLinearGradient(0, 0, size, 0);
-  arcGrad.addColorStop(0, "#C6FF3D");
-  arcGrad.addColorStop(0.5, "#FF6B4A");
-  arcGrad.addColorStop(1, "#0B3D3A");
+  // Signal-green & Sunrise Gold Rim stroke
+  const rimGrad = ctx.createLinearGradient(0, 0, size, size);
+  rimGrad.addColorStop(0, "#0B6839");
+  rimGrad.addColorStop(0.5, "#FFC24B");
+  rimGrad.addColorStop(1, "#FF6F4C");
 
-  ctx.strokeStyle = arcGrad;
+  ctx.strokeStyle = rimGrad;
   ctx.lineWidth = 16;
   ctx.beginPath();
-  ctx.roundRect(20, 20, size - 40, size - 40, 40);
+  ctx.roundRect(24, 24, size - 48, size - 48, 36);
   ctx.stroke();
 
-  // Bioluminescent particles
+  // Thin gold inner accent border
+  ctx.strokeStyle = "rgba(255, 194, 75, 0.4)";
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.roundRect(36, 36, size - 72, size - 72, 28);
+  ctx.stroke();
+
+  // Bioluminescent signal dots
   const points = [
-    { x: 100, y: 980, r: 8 },
-    { x: 260, y: 960, r: 5 },
-    { x: 420, y: 1000, r: 10 },
-    { x: 740, y: 950, r: 7 },
-    { x: 920, y: 990, r: 6 }
+    { x: 120, y: 990, r: 6, color: "#7CFF6B" },
+    { x: 280, y: 970, r: 4, color: "#FFC24B" },
+    { x: 440, y: 1010, r: 8, color: "#0B6839" },
+    { x: 780, y: 960, r: 5, color: "#FF6F4C" },
+    { x: 940, y: 1000, r: 6, color: "#7CFF6B" }
   ];
 
-  ctx.fillStyle = "#C6FF3D";
   for (const p of points) {
+    ctx.fillStyle = p.color;
     ctx.beginPath();
     ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
     ctx.fill();
   }
 
-  // Typography
-  ctx.font = "bold 32px 'JetBrains Mono', monospace";
-  ctx.fillStyle = "#C6FF3D";
-  ctx.fillText("HH GOA 2026", 60, size - 60);
+  // Devanagari गोवा Thin Gold Linework Mark (never without English)
+  drawDevanagariGoaMark(ctx, 60, size - 130, 0.9);
 
-  ctx.font = "500 24px 'JetBrains Mono', monospace";
-  ctx.fillStyle = "#EFE3C8";
-  ctx.textAlign = "end";
-  ctx.fillText("ANJUNA BEACH", size - 60, size - 60);
+  // Brand Typography — English Wordmark
+  ctx.font = "900 36px 'Archivo Black', sans-serif";
+  ctx.fillStyle = "#E8F3EC";
+  ctx.textAlign = "left";
+  ctx.fillText("HH GOA 2026", 210, size - 100);
+
+  ctx.font = "bold 16px 'JetBrains Mono', monospace";
+  ctx.fillStyle = "#7CFF6B";
+  ctx.fillText("LESS NOISE. MORE SIGNAL.", 210, size - 72);
+
+  // Location Metadata on Right
+  ctx.font = "600 18px 'JetBrains Mono', monospace";
+  ctx.fillStyle = "#E8F3EC";
+  ctx.textAlign = "right";
+  ctx.fillText("ANJUNA BEACH • 15.5869° N", size - 60, size - 96);
+
+  ctx.font = "500 14px 'JetBrains Mono', monospace";
+  ctx.fillStyle = "#FFC24B";
+  ctx.fillText("MARCH 2026", size - 60, size - 72);
 
   ctx.restore();
 
@@ -174,65 +256,94 @@ export async function compositeBuilderCard(opts: {
 
   const photo = await loadImage(opts.photoSrc);
 
-  // 1. Background — monsoon deep teal gradient
+  // 1. Background — deep-tide green gradient
   const bgGrad = ctx.createLinearGradient(0, 0, width, height);
-  bgGrad.addColorStop(0, "#0B3D3A");
-  bgGrad.addColorStop(1, "#08201E");
+  bgGrad.addColorStop(0, "#062B1F");
+  bgGrad.addColorStop(0.5, "#083829");
+  bgGrad.addColorStop(1, "#041B13");
   ctx.fillStyle = bgGrad;
   ctx.fillRect(0, 0, width, height);
 
-  // 2. Card Container Border
-  ctx.strokeStyle = "rgba(239, 227, 200, 0.35)";
+  // Subtle background palm silhouette linework accent
+  ctx.save();
+  ctx.strokeStyle = "rgba(11, 104, 57, 0.25)";
   ctx.lineWidth = 4;
   ctx.beginPath();
-  ctx.roundRect(40, 40, width - 80, height - 80, 40);
+  ctx.arc(width - 100, 200, 180, 0, Math.PI);
+  ctx.stroke();
+  ctx.restore();
+
+  // 2. Card Container Outer Border with Sunrise Accent
+  const cardGlow = ctx.createLinearGradient(0, 0, width, height);
+  cardGlow.addColorStop(0, "rgba(255, 194, 75, 0.4)");
+  cardGlow.addColorStop(0.5, "rgba(11, 104, 57, 0.6)");
+  cardGlow.addColorStop(1, "rgba(255, 111, 76, 0.4)");
+
+  ctx.strokeStyle = cardGlow;
+  ctx.lineWidth = 4;
+  ctx.beginPath();
+  ctx.roundRect(40, 40, width - 80, height - 80, 36);
   ctx.stroke();
 
-  // 3. Perforated Header Divider
+  // 3. Perforated Header Divider with circular notch cutouts
   ctx.save();
-  ctx.strokeStyle = "rgba(239, 227, 200, 0.35)";
+  ctx.strokeStyle = "rgba(232, 243, 236, 0.3)";
   ctx.lineWidth = 3;
-  ctx.setLineDash([16, 16]);
+  ctx.setLineDash([14, 14]);
   ctx.beginPath();
   ctx.moveTo(40, 180);
   ctx.lineTo(width - 40, 180);
   ctx.stroke();
 
-  // Perforated edge circles
-  ctx.fillStyle = "#0B3D3A";
+  // Perforated notch cutouts on edges
+  ctx.fillStyle = "#062B1F";
   ctx.beginPath();
   ctx.arc(40, 180, 24, 0, Math.PI * 2);
   ctx.arc(width - 40, 180, 24, 0, Math.PI * 2);
   ctx.fill();
+
+  ctx.strokeStyle = "#FFC24B";
+  ctx.lineWidth = 2;
+  ctx.setLineDash([]);
+  ctx.beginPath();
+  ctx.arc(40, 180, 24, -Math.PI / 2, Math.PI / 2);
+  ctx.arc(width - 40, 180, 24, Math.PI / 2, -Math.PI / 2);
+  ctx.stroke();
   ctx.restore();
 
-  // 4. Header Text
-  ctx.font = "bold 44px 'Clash Display', sans-serif";
-  ctx.fillStyle = "#EFE3C8";
-  ctx.fillText("HH GOA 2026", 80, 120);
+  // 4. Header: Devanagari Gold Linework + English Wordmark
+  drawDevanagariGoaMark(ctx, 80, 120, 0.85);
+
+  ctx.font = "900 38px 'Archivo Black', sans-serif";
+  ctx.fillStyle = "#E8F3EC";
+  ctx.fillText("HH GOA 2026", 215, 115);
+
+  ctx.font = "bold 14px 'JetBrains Mono', monospace";
+  ctx.fillStyle = "#7CFF6B";
+  ctx.fillText("OFFICIAL BUILDER PASS", 215, 138);
 
   const badgeId = opts.builder.idNumber || `#GOA-${Math.floor(1000 + Math.random() * 9000)}`;
   ctx.font = "bold 24px 'JetBrains Mono', monospace";
-  ctx.fillStyle = "#C6FF3D";
+  ctx.fillStyle = "#FFC24B";
   ctx.textAlign = "end";
-  ctx.fillText(badgeId, width - 80, 120);
+  ctx.fillText(badgeId, width - 80, 124);
   ctx.textAlign = "start";
 
-  // 5. Photo Window with Cover Crop & Glow Ring
+  // 5. Photo Window with Cover Crop & Sunrise Rim Light
   const photoX = 80;
   const photoY = 230;
   const photoW = width - 160; // 920
-  const photoH = 620;
+  const photoH = 610;
 
   drawCover(ctx, photo, photoX, photoY, photoW, photoH, 28);
 
-  // Photo border glow ring
-  const photoGlow = ctx.createLinearGradient(photoX, photoY, photoX + photoW, photoY + photoH);
-  photoGlow.addColorStop(0, "#C6FF3D");
-  photoGlow.addColorStop(0.5, "#FF6B4A");
-  photoGlow.addColorStop(1, "#0B3D3A");
+  // Photo border rim light
+  const photoRim = ctx.createLinearGradient(photoX, photoY, photoX + photoW, photoY + photoH);
+  photoRim.addColorStop(0, "#FFC24B");
+  photoRim.addColorStop(0.5, "#0B6839");
+  photoRim.addColorStop(1, "#FF6F4C");
 
-  ctx.strokeStyle = photoGlow;
+  ctx.strokeStyle = photoRim;
   ctx.lineWidth = 6;
   ctx.beginPath();
   ctx.roundRect(photoX, photoY, photoW, photoH, 28);
@@ -240,54 +351,61 @@ export async function compositeBuilderCard(opts: {
 
   // 6. Perforated Bottom Divider
   ctx.save();
-  ctx.strokeStyle = "rgba(239, 227, 200, 0.35)";
+  ctx.strokeStyle = "rgba(232, 243, 236, 0.3)";
   ctx.lineWidth = 3;
-  ctx.setLineDash([16, 16]);
+  ctx.setLineDash([14, 14]);
   ctx.beginPath();
-  ctx.moveTo(40, 900);
-  ctx.lineTo(width - 40, 900);
+  ctx.moveTo(40, 890);
+  ctx.lineTo(width - 40, 890);
   ctx.stroke();
 
-  ctx.fillStyle = "#0B3D3A";
+  ctx.fillStyle = "#062B1F";
   ctx.beginPath();
-  ctx.arc(40, 900, 24, 0, Math.PI * 2);
-  ctx.arc(width - 40, 900, 24, 0, Math.PI * 2);
+  ctx.arc(40, 890, 24, 0, Math.PI * 2);
+  ctx.arc(width - 40, 890, 24, 0, Math.PI * 2);
   ctx.fill();
+
+  ctx.strokeStyle = "#FFC24B";
+  ctx.lineWidth = 2;
+  ctx.setLineDash([]);
+  ctx.beginPath();
+  ctx.arc(40, 890, 24, -Math.PI / 2, Math.PI / 2);
+  ctx.arc(width - 40, 890, 24, Math.PI / 2, -Math.PI / 2);
+  ctx.stroke();
   ctx.restore();
 
-  // 7. Builder Info Details
-  // Name
+  // 7. Builder Details Section
   const builderName = (opts.builder.name || "GOA BUILDER").toUpperCase();
-  ctx.font = "bold 20px 'JetBrains Mono', monospace";
-  ctx.fillStyle = "rgba(239, 227, 200, 0.6)";
-  ctx.fillText("BUILDER NAME", 80, 960);
+  ctx.font = "bold 16px 'JetBrains Mono', monospace";
+  ctx.fillStyle = "#FFC24B";
+  ctx.fillText("BUILDER NAME", 80, 950);
 
-  ctx.font = "bold 44px 'Clash Display', sans-serif";
-  ctx.fillStyle = "#EFE3C8";
-  ctx.fillText(builderName, 80, 1010);
+  ctx.font = "900 46px 'Archivo Black', sans-serif";
+  ctx.fillStyle = "#E8F3EC";
+  ctx.fillText(builderName, 80, 1000);
 
   // Title
   const title = (opts.builder.builderTitle || "ARAMBOL ARCHITECT").toUpperCase();
-  ctx.font = "bold 18px 'JetBrains Mono', monospace";
-  ctx.fillStyle = "rgba(239, 227, 200, 0.6)";
-  ctx.fillText("TITLE", 80, 1070);
+  ctx.font = "bold 15px 'JetBrains Mono', monospace";
+  ctx.fillStyle = "rgba(232, 243, 236, 0.6)";
+  ctx.fillText("TITLE / ROLE", 80, 1055);
 
-  ctx.font = "bold 32px 'Clash Display', sans-serif";
-  ctx.fillStyle = "#C6FF3D";
-  ctx.fillText(title, 80, 1115);
+  ctx.font = "bold 28px 'JetBrains Mono', monospace";
+  ctx.fillStyle = "#7CFF6B";
+  ctx.fillText(title, 80, 1095);
 
   // Stack & Location
   const stackText = (opts.builder.stack || "NEXT.JS • TYPESCRIPT • TAILWIND").toUpperCase();
-  ctx.font = "bold 18px 'JetBrains Mono', monospace";
-  ctx.fillStyle = "rgba(239, 227, 200, 0.6)";
-  ctx.fillText("LOCATION & STACK", 80, 1175);
+  ctx.font = "bold 15px 'JetBrains Mono', monospace";
+  ctx.fillStyle = "rgba(232, 243, 236, 0.6)";
+  ctx.fillText("STACK & LOCATION", 80, 1155);
 
-  ctx.font = "bold 22px 'JetBrains Mono', monospace";
-  ctx.fillStyle = "#EFE3C8";
-  ctx.fillText(`ANJUNA BEACH • ${stackText}`, 80, 1215);
+  ctx.font = "600 20px 'Inter', sans-serif";
+  ctx.fillStyle = "#E8F3EC";
+  ctx.fillText(`ANJUNA BEACH • ${stackText}`, 80, 1195);
 
   // 8. Barcode Rendering on Bottom Right
-  drawBarcode(ctx, width - 300, 1120, 80, "HH-GOA-2026");
+  drawBarcode(ctx, width - 320, 1110, 75, "HH-GOA-2026");
 
   return new Promise((resolve) =>
     canvas.toBlob((blob) => resolve(blob!), "image/png", 0.95)
@@ -332,3 +450,4 @@ export async function normalizeToJpeg(file: File): Promise<File> {
     return file;
   }
 }
+

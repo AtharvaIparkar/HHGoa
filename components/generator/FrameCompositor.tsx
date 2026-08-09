@@ -3,8 +3,7 @@
 import { useEffect, useState } from "react";
 import { compositeFrame } from "@/lib/canvas-utils";
 import { useGeneratorStore } from "@/lib/store";
-import { TideReveal } from "@/components/motion/TideReveal";
-import { motion } from "framer-motion";
+import { GenerationReveal } from "@/components/motion/GenerationReveal";
 
 export function FrameCompositor() {
   const photoObjectUrl = useGeneratorStore((s) => s.photoObjectUrl);
@@ -54,28 +53,29 @@ export function FrameCompositor() {
 
   if (status === "working") {
     return (
-      <div className="flex flex-col items-center justify-center p-12 glass-card rounded-2xl gap-3 w-full text-center">
-        <div className="h-8 w-8 rounded-full border-2 border-tide border-t-transparent animate-spin" />
-        <motion.p
-          className="font-mono text-sm text-sand/80"
-          animate={{ opacity: [0.4, 1, 0.4] }}
-          transition={{ repeat: Infinity, duration: 1.1 }}
-        >
-          compositing your Goa graphic…
-        </motion.p>
+      <div className="flex flex-col items-center justify-center p-12 glass-card rounded-3xl gap-4 w-full text-center border border-[#E8F3EC]/20 shadow-2xl">
+        <div className="relative flex items-center justify-center">
+          <div className="h-10 w-10 rounded-full border-2 border-[#7CFF6B] border-t-transparent animate-spin" />
+          <div className="absolute h-6 w-6 rounded-full bg-[#0B6839]/60 animate-ping" />
+        </div>
+        <p className="font-mono text-xs font-bold text-[#7CFF6B] tracking-wider uppercase">
+          COMPOSITING_GRAPHIC // CLIENT_SIDE
+        </p>
+        <p className="font-body text-xs text-[#E8F3EC]/70">
+          Zero server compute • High-DPI canvas render
+        </p>
       </div>
     );
   }
 
   return (
-    <TideReveal>
-      <div className="relative group overflow-hidden rounded-2xl shadow-2xl border border-sand/20">
-        <img
-          src={previewUrl!}
-          alt="Your HH Goa 2026 branded graphic"
-          className="w-full h-auto object-contain rounded-2xl"
-        />
-      </div>
-    </TideReveal>
+    <GenerationReveal className="w-full">
+      <img
+        src={previewUrl!}
+        alt="HH Goa 2026 composited graphic"
+        className="w-full h-auto object-contain rounded-3xl"
+      />
+    </GenerationReveal>
   );
 }
+

@@ -1,23 +1,10 @@
 "use client";
 
-import { useGeneratorStore } from "@/lib/store";
+import { useGeneratorStore, generateClientSideTitle } from "@/lib/store";
 import { Input } from "@/components/ui/Input";
 import { Badge } from "@/components/ui/Badge";
 
-const PRESET_STACKS = ["Next.js", "Solana", "Rust", "AI", "Tailwind", "Python", "TypeScript", "Go"];
-
-const TITLE_PHRASE_BANK = [
-  "Arambol Architect",
-  "Bioluminescent Hacker",
-  "Sunburn Solver",
-  "Anjuna Automator",
-  "Tide Surfer",
-  "Vagator Vector",
-  "Morjim Mind",
-  "Palolem Pioneer",
-  "Chapora Coder",
-  "Goa Fullstacker"
-];
+const PRESET_STACKS = ["Next.js", "Solana", "Rust", "AI / ML", "TypeScript", "Python", "Tailwind", "Move", "Wasm"];
 
 export function IDCardForm() {
   const builder = useGeneratorStore((s) => s.builder);
@@ -32,31 +19,44 @@ export function IDCardForm() {
     } else {
       updated = [...selectedStacks, tech];
     }
-    setBuilder({ stack: updated.join(" • ") });
+    const stackStr = updated.join(" • ");
+    const newTitle = generateClientSideTitle(builder.name || "GOA", stackStr || "BUILDER");
+    setBuilder({ stack: stackStr, builderTitle: newTitle });
   }
 
   function randomizeTitle() {
-    const randomIndex = Math.floor(Math.random() * TITLE_PHRASE_BANK.length);
-    const title = TITLE_PHRASE_BANK[randomIndex] || "Arambol Architect";
+    const title = generateClientSideTitle(
+      Math.random().toString(36).substring(7),
+      builder.stack || "GOA"
+    );
     setBuilder({ builderTitle: title });
   }
 
   return (
-    <div className="flex flex-col gap-5 w-full glass-card p-6 rounded-2xl border border-sand/20 shadow-xl">
-      <h3 className="font-display text-lg text-sand tracking-wide uppercase border-b border-sand/20 pb-3">
-        Customize Builder Details
-      </h3>
+    <div className="flex flex-col gap-5 w-full glass-card p-6 rounded-3xl border border-[#E8F3EC]/20 shadow-2xl">
+      <div className="flex items-center justify-between border-b border-[#E8F3EC]/15 pb-3">
+        <h3 className="font-display text-lg font-black text-[#E8F3EC] tracking-wide uppercase">
+          Customize Builder Pass
+        </h3>
+        <span className="font-mono text-[10px] text-[#7CFF6B] bg-[#0B6839]/40 border border-[#0B6839] px-2 py-0.5 rounded-full">
+          INSTANT_COMPILED
+        </span>
+      </div>
 
       <Input
-        label="Builder Name"
-        placeholder="e.g. Alex Rivera"
+        label="Builder Name / Handle"
+        placeholder="e.g. Satoshi Nakamoto"
         value={builder.name}
-        onChange={(e) => setBuilder({ name: e.target.value })}
+        onChange={(e) => {
+          const val = e.target.value;
+          const autoTitle = generateClientSideTitle(val || "GOA", builder.stack || "BUILDER");
+          setBuilder({ name: val, builderTitle: autoTitle });
+        }}
       />
 
-      <div className="flex flex-col gap-2">
-        <label className="font-mono text-xs uppercase tracking-wider text-sand/80">
-          Tech Stack
+      <div className="flex flex-col gap-2.5">
+        <label className="font-mono text-xs uppercase tracking-wider text-[#E8F3EC]/80">
+          Tech Stack &amp; Focus Area
         </label>
         <div className="flex flex-wrap gap-2">
           {PRESET_STACKS.map((tech) => (
@@ -72,23 +72,24 @@ export function IDCardForm() {
 
       <div className="flex flex-col gap-1.5">
         <div className="flex items-center justify-between">
-          <label className="font-mono text-xs uppercase tracking-wider text-sand/80">
-            Builder Title
+          <label className="font-mono text-xs uppercase tracking-wider text-[#FFC24B]">
+            Generated Builder Title
           </label>
           <button
             type="button"
             onClick={randomizeTitle}
-            className="font-mono text-[11px] text-tide hover:underline cursor-pointer"
+            className="font-mono text-[11px] text-[#7CFF6B] hover:underline cursor-pointer"
           >
-            🎲 Randomize Title
+            🎲 Regenerate Title
           </button>
         </div>
         <Input
-          placeholder="e.g. Arambol Architect"
+          placeholder="e.g. ARAMBOL ARCHITECT"
           value={builder.builderTitle}
-          onChange={(e) => setBuilder({ builderTitle: e.target.value })}
+          onChange={(e) => setBuilder({ builderTitle: e.target.value.toUpperCase() })}
         />
       </div>
     </div>
   );
 }
+
