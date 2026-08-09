@@ -9,6 +9,8 @@ export function FrameCompositor() {
   const photoObjectUrl = useGeneratorStore((s) => s.photoObjectUrl);
   const format = useGeneratorStore((s) => s.format);
   const builder = useGeneratorStore((s) => s.builder);
+  const transform = useGeneratorStore((s) => s.transform);
+  const activeThemeId = useGeneratorStore((s) => s.activeThemeId);
   const setResult = useGeneratorStore((s) => s.setResult);
 
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
@@ -29,6 +31,8 @@ export function FrameCompositor() {
     compositeFrame({
       photoSrc: photoObjectUrl,
       format,
+      transform,
+      themeId: activeThemeId,
       frameSrc,
       builder
     })
@@ -47,7 +51,8 @@ export function FrameCompositor() {
     return () => {
       active = false;
     };
-  }, [photoObjectUrl, format, builder, setResult]);
+  }, [photoObjectUrl, format, transform, activeThemeId, builder, setResult]);
+
 
   if (status === "idle") return null;
 

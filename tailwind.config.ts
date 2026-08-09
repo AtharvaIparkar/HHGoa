@@ -7,8 +7,9 @@ export default {
     extend: {
       colors: {
         // Sunrise Signal palette — official HH Goa 2026 design system
-        "deep-tide": "#062B1F", // near-black green, primary background
-        "signal-green": "#0B6839", // brand accent green, primary CTAs and focus states
+        "deep-tide": "#0D5B35", // rich signal green, primary background
+        "signal-green": "#0F7A47", // brand accent green, primary CTAs and focus states
+
         "sunrise-coral": "#FF6F4C", // animated gradient pair — coral sweep
         "sunrise-gold": "#FFC24B", // animated gradient pair — gold sweep
         foam: "#E8F3EC", // light text/surfaces on dark

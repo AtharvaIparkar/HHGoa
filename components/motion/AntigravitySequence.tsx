@@ -126,18 +126,24 @@ export function AntigravitySequence() {
               transition={{ type: "spring", stiffness: 260, damping: 18 }}
               className="relative w-64 h-80 rounded-2xl bg-[#062B1F]/90 border border-[#FFC24B]/40 p-4 shadow-2xl flex flex-col justify-between overflow-hidden"
             >
-              {/* Photo Area */}
-              <div className="w-full h-44 rounded-xl bg-gradient-to-tr from-[#0B6839] via-[#FF6F4C] to-[#FFC24B] relative overflow-hidden flex items-center justify-center">
-                <span className="font-mono text-xs text-[#E8F3EC] bg-[#062B1F]/80 px-2 py-1 rounded">
-                  SAMPLE_PHOTO.RAW
-                </span>
+              {/* Photo Area with Sunrise Image Asset */}
+              <div className="w-full h-44 rounded-xl bg-gradient-to-tr from-[#0B6839] via-[#FF6F4C] to-[#FFC24B] relative overflow-hidden flex items-center justify-center border border-[#FFC24B]/30">
+                <img
+                  src="/assets/sun-rise.png"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = "https://hhgoa.com/assets/Sun%20rise.png";
+                  }}
+                  alt="HH Goa Sunrise"
+                  className="w-full h-full object-cover rounded-xl"
+                />
+
 
                 {/* CRT Scan Line Sweep */}
                 <motion.div
                   initial={{ x: "-100%" }}
                   animate={{ x: "100%" }}
                   transition={{ duration: 0.9, ease: "easeInOut" }}
-                  className="absolute inset-y-0 w-16 bg-gradient-to-r from-transparent via-[#7CFF6B] to-transparent opacity-80"
+                  className="absolute inset-y-0 w-16 bg-gradient-to-r from-transparent via-[#7CFF6B] to-transparent opacity-80 pointer-events-none"
                 />
               </div>
 
@@ -152,6 +158,7 @@ export function AntigravitySequence() {
               </div>
             </motion.div>
           )}
+
 
           {/* Step 5: Odometer Hard Spring Counters */}
           {stepIndex >= 5 && (

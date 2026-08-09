@@ -1,84 +1,97 @@
 "use client";
 
-import { useGeneratorStore } from "@/lib/store";
-import { OdometerCounter } from "@/components/motion/OdometerCounter";
+import { useGeneratorStore, type Step } from "@/lib/store";
+import { THEMES } from "@/lib/themes";
+import { Wordmark } from "@/components/ui/Wordmark";
+
+const STEPS: { id: Step; label: string }[] = [
+  { id: "upload", label: "1. UPLOAD" },
+  { id: "customize", label: "2. CUSTOMIZE" },
+  { id: "result", label: "3. RESULT" }
+];
 
 export function Header() {
   const step = useGeneratorStore((s) => s.step);
+  const setStep = useGeneratorStore((s) => s.setStep);
+  const photoObjectUrl = useGeneratorStore((s) => s.photoObjectUrl);
   const reset = useGeneratorStore((s) => s.reset);
+  const activeThemeId = useGeneratorStore((s) => s.activeThemeId);
+  const theme = THEMES[activeThemeId] || THEMES.signal;
 
-  const steps = [
-    { id: "upload", label: "1. UPLOAD" },
-    { id: "customize", label: "2. CUSTOMIZE" },
-    { id: "result", label: "3. RESULT" }
-  ];
-
-  const currentStepIndex = step === "upload" ? 0 : step === "customize" || step === "generate" ? 1 : 2;
+  const currentStepIndex = step === "upload" ? 0 : step === "customize" ? 1 : 2;
 
   return (
-    <header className="w-full flex flex-col gap-5 border-b border-[#E8F3EC]/15 pb-6">
-      {/* Brand Top Bar */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          {/* Devanagari गोवा Thin Gold Linework Mark */}
-          <div className="flex items-center gap-2 border border-[#FFC24B]/40 bg-[#062B1F]/80 px-2.5 py-1 rounded-full backdrop-blur-md">
-            <span className="font-mono text-xs font-bold text-[#FFC24B] tracking-widest uppercase">
-              HACKER HOUSE GOA 2026
-            </span>
-          </div>
-        </div>
+    <header className="w-full flex flex-col gap-4 border-b pb-5 transition-colors duration-250" style={{ borderColor: theme.colors.border }}>
+      {/* Brand Top Lockup */}
+      <div className="flex items-center justify-between gap-3">
+        <Wordmark size="sm" waveColor={theme.colors.accentGlow} goldColor={theme.colors.secondaryAccent} />
 
-        {step !== "upload" && (
+        {photoObjectUrl && (
           <button
             type="button"
             onClick={reset}
-            className="font-mono text-xs text-[#E8F3EC]/70 hover:text-[#7CFF6B] transition-colors cursor-pointer border border-[#E8F3EC]/20 hover:border-[#7CFF6B]/50 px-3 py-1 rounded-full"
+            className="font-mono text-xs hover:underline cursor-pointer border px-3 py-1 rounded-full transition-all"
+            style={{
+              color: theme.colors.textSecondary,
+              borderColor: theme.colors.border
+            }}
           >
             ← Start Over
           </button>
         )}
       </div>
 
-      {/* Main Title & Live Stats */}
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-        <div>
-          <h1 className="font-display text-3xl md:text-4xl font-black text-[#E8F3EC] tracking-tight leading-none uppercase">
-            Frame / ID Card
-          </h1>
-          <p className="font-mono text-xs text-[#7CFF6B] mt-1.5 flex items-center gap-2">
-            <span>LESS NOISE. MORE SIGNAL.</span>
-          </p>
-        </div>
+      {/* Main Title & Subtitle (Exact layout from user reference image) */}
+      <div className="flex flex-col gap-1 mt-1">
+        <h1 className="font-display text-4xl sm:text-5xl font-black tracking-tight text-[#E8F3EC] uppercase leading-none">
+          FRAME / ID CARD
+        </h1>
+        <p className="font-mono text-xs font-bold tracking-widest uppercase" style={{ color: theme.colors.accentGlow }}>
+          LESS NOISE. MORE SIGNAL.
+        </p>
       </div>
 
-      {/* Step Indicator Bar */}
-      <div className="grid grid-cols-3 gap-2.5 mt-1">
-        {steps.map((s, idx) => {
+      {/* 3-Step Progress Indicator (Exact layout from user reference image) */}
+      <div className="grid grid-cols-3 gap-3 mt-2">
+        {STEPS.map((s, idx) => {
           const isActive = idx === currentStepIndex;
           const isDone = idx < currentStepIndex;
           return (
-            <div key={s.id} className="flex flex-col gap-1.5">
+            <button
+              key={s.id}
+              type="button"
+              disabled={!photoObjectUrl && s.id !== "upload"}
+              onClick={() => setStep(s.id)}
+              className="flex flex-col gap-2 text-left cursor-pointer group disabled:cursor-not-allowed"
+            >
               <div
-                className={`h-1.5 rounded-full transition-all duration-300 ${
+                className={`h-2 rounded-full transition-all duration-300 ${
                   isActive
-                    ? "bg-[#7CFF6B] shadow-[0_0_12px_rgba(124,255,107,0.6)]"
+                    ? "shadow-[0_0_12px_rgba(124,255,107,0.7)]"
                     : isDone
-                    ? "bg-[#0B6839]"
-                    : "bg-[#062B1F]/80 border border-[#E8F3EC]/20"
+                    ? "opacity-80"
+                    : "opacity-25"
                 }`}
+                style={{
+                  backgroundColor: isActive ? theme.colors.accentGlow : isDone ? theme.colors.accent : theme.colors.border
+                }}
               />
               <span
-                className={`font-mono text-[10px] uppercase tracking-wider ${
-                  isActive ? "text-[#7CFF6B] font-bold" : isDone ? "text-[#0B6839]" : "text-[#E8F3EC]/40"
-                }`}
+                className="font-mono text-xs font-bold uppercase tracking-wider transition-colors"
+                style={{
+                  color: isActive ? theme.colors.accentGlow : isDone ? theme.colors.text : theme.colors.textSecondary
+                }}
               >
                 {s.label}
               </span>
-            </div>
+            </button>
           );
         })}
       </div>
     </header>
   );
 }
+
+
+
 
