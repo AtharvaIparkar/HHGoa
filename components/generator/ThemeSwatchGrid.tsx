@@ -69,16 +69,23 @@ function ThemeSwatchItem({
 export function ThemeSwatchGrid() {
   const activeThemeId = useGeneratorStore((s) => s.activeThemeId);
   const setTheme = useGeneratorStore((s) => s.setTheme);
+  const activeTheme = THEMES[activeThemeId] || THEMES.signal;
   const themeList = Object.values(THEMES);
 
   return (
-    <div className="flex flex-col gap-2.5 w-full bg-[#062B1F]/60 border p-4 rounded-3xl backdrop-blur-md shadow-xl border-[#E8F3EC]/20">
+    <div
+      className="flex flex-col gap-2.5 w-full border p-4 rounded-3xl backdrop-blur-md shadow-xl transition-colors duration-250"
+      style={{
+        backgroundColor: activeTheme.colors.cardBg,
+        borderColor: activeTheme.colors.border
+      }}
+    >
       <div className="flex items-center justify-between">
-        <span className="font-mono text-xs font-bold uppercase tracking-wider text-[#7CFF6B]">
+        <span className="font-mono text-xs font-bold uppercase tracking-wider" style={{ color: activeTheme.colors.accentGlow }}>
           THEME PALETTES
         </span>
 
-        <span className="font-mono text-[10px] text-[#E8F3EC]/60">
+        <span className="font-mono text-[10px]" style={{ color: activeTheme.colors.textSecondary }}>
           6 Styles • Live Preview
         </span>
       </div>
@@ -97,4 +104,5 @@ export function ThemeSwatchGrid() {
     </div>
   );
 }
+
 

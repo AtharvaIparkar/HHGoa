@@ -1,5 +1,6 @@
-import { clsx } from "clsx";
 import type { InputHTMLAttributes } from "react";
+import { useGeneratorStore } from "@/lib/store";
+import { THEMES } from "@/lib/themes";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
@@ -8,26 +9,29 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 export function Input({ label, helperText, error, className, id, ...props }: InputProps) {
+  const activeThemeId = useGeneratorStore((s) => s.activeThemeId);
+  const theme = THEMES[activeThemeId] || THEMES.signal;
   const inputId = id ?? (label ? label.toLowerCase().replace(/\s+/g, "-") : undefined);
 
   return (
     <div className="flex flex-col gap-1.5 w-full">
       {label && (
-        <label htmlFor={inputId} className="font-mono text-xs uppercase tracking-wider text-[#E8F3EC]/80">
+        <label htmlFor={inputId} className="font-mono text-xs uppercase tracking-wider" style={{ color: theme.colors.textSecondary }}>
           {label}
         </label>
       )}
       <input
         id={inputId}
-        className={clsx(
-          "w-full rounded-xl bg-[#062B1F]/90 border px-4 py-3 font-mono text-sm text-[#E8F3EC] placeholder:text-[#E8F3EC]/40 transition-colors focus:outline-none focus:ring-2 focus:ring-[#7CFF6B] focus:border-transparent",
-          error ? "border-[#FF6F4C]" : "border-[#E8F3EC]/30 hover:border-[#FFC24B]",
-          className
-        )}
+        className={`w-full rounded-xl border px-4 py-3 font-mono text-sm transition-colors focus:outline-none focus:ring-2 ${className || ""}`}
+        style={{
+          backgroundColor: theme.colors.bg,
+          color: theme.colors.text,
+          borderColor: error ? "#FF6F4C" : theme.colors.border
+        }}
         {...props}
       />
       {helperText && !error && (
-        <span className="font-mono text-[10px] text-[#E8F3EC]/50">{helperText}</span>
+        <span className="font-mono text-[10px]" style={{ color: theme.colors.textSecondary }}>{helperText}</span>
       )}
       {error && (
         <span role="alert" className="font-mono text-[11px] text-[#FF6F4C]">
@@ -37,4 +41,5 @@ export function Input({ label, helperText, error, className, id, ...props }: Inp
     </div>
   );
 }
+
 

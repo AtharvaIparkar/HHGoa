@@ -54,6 +54,19 @@ export function FrameCompositor() {
   }, [photoObjectUrl, format, transform, activeThemeId, builder, setResult]);
 
 
+  const [tilt, setTilt] = useState({ x: 0, y: 0 });
+
+  const handlePointerMove = (e: React.PointerEvent) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    setTilt({ x: y * -14, y: x * 14 });
+  };
+
+  const handlePointerLeave = () => {
+    setTilt({ x: 0, y: 0 });
+  };
+
   if (status === "idle") return null;
 
   if (status === "working") {
@@ -75,12 +88,22 @@ export function FrameCompositor() {
 
   return (
     <GenerationReveal className="w-full">
-      <img
-        src={previewUrl!}
-        alt="HH Goa 2026 composited graphic"
-        className="w-full h-auto object-contain rounded-3xl"
-      />
+      <div
+        onPointerMove={handlePointerMove}
+        onPointerLeave={handlePointerLeave}
+        className="w-full transition-transform duration-150 ease-out select-none cursor-pointer"
+        style={{
+          transform: `perspective(1000px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`
+        }}
+      >
+        <img
+          src={previewUrl!}
+          alt="HH Goa 2026 composited graphic"
+          className="w-full h-auto object-contain rounded-3xl shadow-2xl border border-white/20"
+        />
+      </div>
     </GenerationReveal>
   );
 }
+
 

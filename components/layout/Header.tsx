@@ -30,10 +30,11 @@ export function Header() {
           <button
             type="button"
             onClick={reset}
-            className="font-mono text-xs hover:underline cursor-pointer border px-3 py-1 rounded-full transition-all"
+            className="font-mono text-xs font-bold cursor-pointer border px-3 py-1.5 rounded-full transition-all shadow-md hover:scale-105"
             style={{
-              color: theme.colors.textSecondary,
-              borderColor: theme.colors.border
+              color: theme.colors.text,
+              backgroundColor: theme.colors.cardBg,
+              borderColor: theme.colors.accentGlow || theme.colors.border
             }}
           >
             ← Start Over
@@ -41,9 +42,9 @@ export function Header() {
         )}
       </div>
 
-      {/* Main Title & Subtitle (Exact layout from user reference image) */}
+      {/* Main Title & Subtitle */}
       <div className="flex flex-col gap-1 mt-1">
-        <h1 className="font-display text-4xl sm:text-5xl font-black tracking-tight text-[#E8F3EC] uppercase leading-none">
+        <h1 className="font-display text-4xl sm:text-5xl font-black tracking-tight uppercase leading-none" style={{ color: theme.colors.text }}>
           FRAME / ID CARD
         </h1>
         <p className="font-mono text-xs font-bold tracking-widest uppercase" style={{ color: theme.colors.accentGlow }}>
@@ -51,7 +52,7 @@ export function Header() {
         </p>
       </div>
 
-      {/* 3-Step Progress Indicator (Exact layout from user reference image) */}
+      {/* 3-Step Progress Indicator */}
       <div className="grid grid-cols-3 gap-3 mt-2">
         {STEPS.map((s, idx) => {
           const isActive = idx === currentStepIndex;
@@ -70,7 +71,7 @@ export function Header() {
                     ? "shadow-[0_0_12px_rgba(124,255,107,0.7)]"
                     : isDone
                     ? "opacity-80"
-                    : "opacity-25"
+                    : "opacity-35"
                 }`}
                 style={{
                   backgroundColor: isActive ? theme.colors.accentGlow : isDone ? theme.colors.accent : theme.colors.border
@@ -88,6 +89,7 @@ export function Header() {
           );
         })}
       </div>
+
     </header>
   );
 }

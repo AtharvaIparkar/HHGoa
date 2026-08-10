@@ -105,13 +105,13 @@ export const THEMES: Record<ThemeId, ThemeConfig> = {
     isDark: false,
     colors: {
       bg: "#F4EFE6",
-      cardBg: "rgba(255, 252, 247, 0.9)",
+      cardBg: "rgba(255, 252, 247, 0.95)",
       text: "#2C1810",
-      textSecondary: "rgba(44, 24, 16, 0.7)",
+      textSecondary: "rgba(44, 24, 16, 0.8)",
       accent: "#A83220",
-      accentGlow: "#D4AF37",
-      secondaryAccent: "#D4AF37",
-      border: "rgba(168, 50, 32, 0.35)",
+      accentGlow: "#801B0E",
+      secondaryAccent: "#B45309",
+      border: "rgba(168, 50, 32, 0.45)",
       focus: "#A83220",
       rimLight: "#D4AF37",
       stepperActive: "#A83220"
@@ -128,18 +128,19 @@ export const THEMES: Record<ThemeId, ThemeConfig> = {
       bg: "#FDF2F4",
       cardBg: "rgba(255, 245, 247, 0.95)",
       text: "#4A2E35",
-      textSecondary: "rgba(74, 46, 53, 0.7)",
+      textSecondary: "rgba(74, 46, 53, 0.8)",
       accent: "#E86A92",
-      accentGlow: "#FFB7C5",
-      secondaryAccent: "#F7B267",
-      border: "rgba(232, 106, 146, 0.4)",
+      accentGlow: "#C92A54",
+      secondaryAccent: "#D97706",
+      border: "rgba(201, 42, 84, 0.45)",
       focus: "#E86A92",
       rimLight: "#F7B267",
-      stepperActive: "#E86A92"
+      stepperActive: "#C92A54"
     },
     signatureMotion: "Falling Petal Particles (CSS-only ~12 particles)",
     description: "Blush pink, warm gold, cream blossom accents"
   },
+
   synthwave: {
     id: "synthwave",
     name: "Synthwave Tide",

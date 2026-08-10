@@ -190,30 +190,52 @@ export function PhotoEditorCanvas() {
     setTransform({ rotation: (transform.rotation + 90) % 360 });
   };
 
+  const [tilt, setTilt] = useState({ x: 0, y: 0 });
+
+  // 3D Tilt calculation on hover
+  const handleCanvasPointerMove = (e: React.PointerEvent) => {
+    if (isDragging) {
+      handlePointerMove(e);
+      return;
+    }
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    setTilt({ x: y * -12, y: x * 12 });
+  };
+
+  const handlePointerLeave = () => {
+    setTilt({ x: 0, y: 0 });
+    setIsDragging(false);
+  };
+
   if (!photoObjectUrl) return null;
 
   return (
     <div className="flex flex-col items-center gap-4 w-full">
-      {/* Interactive Editor Canvas Viewport */}
+      {/* Interactive Editor Canvas Viewport with 3D Tilt Effect */}
       <div
         onWheel={handleWheel}
         onPointerDown={handlePointerDown}
-        onPointerMove={handlePointerMove}
+        onPointerMove={handleCanvasPointerMove}
         onPointerUp={handlePointerUp}
+        onPointerLeave={handlePointerLeave}
         onPointerCancel={handlePointerUp}
-        className={`relative overflow-hidden rounded-3xl border-2 shadow-2xl cursor-grab active:cursor-grabbing select-none transition-all w-full ${
+        className={`relative overflow-hidden rounded-3xl border-2 shadow-2xl cursor-grab active:cursor-grabbing select-none transition-transform duration-150 ease-out w-full ${
           isDragging ? "ring-2" : ""
         }`}
         style={{
           touchAction: "none",
           borderColor: theme.colors.border,
-          backgroundColor: theme.colors.cardBg
+          backgroundColor: theme.colors.cardBg,
+          transform: `perspective(1000px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`
         }}
       >
         <canvas
           ref={canvasRef}
           className="w-full h-auto max-h-[460px] object-contain rounded-3xl"
         />
+
 
         {/* Floating Pan & Zoom Hint */}
         <div
