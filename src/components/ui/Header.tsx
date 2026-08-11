@@ -29,7 +29,7 @@ export function Header({
           className="studio-logo text-left cursor-pointer bg-transparent border-none p-0"
         >
           <span>2:47PM STUDIO</span>
-          <span class="studio-subtitle">HH GOA 2026</span>
+          <span className="studio-subtitle">HH GOA 2026</span>
         </button>
 
         {/* Center Hacker House Goa Wordmark Lockup */}
