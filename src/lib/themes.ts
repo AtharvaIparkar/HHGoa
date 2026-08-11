@@ -1,4 +1,4 @@
-import { ThemeId, ThemeConfig } from "@/types";
+import { ThemeConfig, ThemeId } from "@/types";
 
 export const THEMES: Record<ThemeId, ThemeConfig> = {
   signal: {
@@ -23,36 +23,36 @@ export const THEMES: Record<ThemeId, ThemeConfig> = {
   terminal: {
     id: "terminal",
     name: "Terminal",
-    subtitle: "Cybernetic Hacker Mode",
+    subtitle: "Retro Hacker Green",
     isDark: true,
     colors: {
       bg: "#080C0A",
-      cardBg: "rgba(8, 12, 10, 0.92)",
+      cardBg: "rgba(10, 20, 15, 0.92)",
       text: "#00FF66",
-      textSecondary: "rgba(0, 255, 102, 0.8)",
-      accent: "#003311",
-      accentGlow: "#00FF66",
-      secondaryAccent: "#33FF99",
+      textSecondary: "rgba(0, 255, 102, 0.75)",
+      accent: "#00FF66",
+      accentGlow: "#33FF99",
+      secondaryAccent: "#00E5FF",
       border: "rgba(0, 255, 102, 0.5)",
       focus: "#00FF66",
-      rimLight: "#33FF99",
+      rimLight: "#00FF66",
       stepperActive: "#00FF66"
     }
   },
   monsoon: {
     id: "monsoon",
     name: "Monsoon",
-    subtitle: "Goan Rain & Ocean Neon",
+    subtitle: "Cyber Tempest Neon",
     isDark: true,
     colors: {
       bg: "#0E0B16",
-      cardBg: "rgba(14, 11, 22, 0.9)",
-      text: "#00E5FF",
-      textSecondary: "rgba(0, 229, 255, 0.75)",
-      accent: "#1A0B2E",
-      accentGlow: "#00E5FF",
+      cardBg: "rgba(18, 14, 30, 0.92)",
+      text: "#E0F7FA",
+      textSecondary: "rgba(224, 247, 250, 0.75)",
+      accent: "#00E5FF",
+      accentGlow: "#FF007A",
       secondaryAccent: "#FF007A",
-      border: "rgba(0, 229, 255, 0.4)",
+      border: "rgba(0, 229, 255, 0.5)",
       focus: "#00E5FF",
       rimLight: "#FF007A",
       stepperActive: "#00E5FF"
@@ -60,18 +60,18 @@ export const THEMES: Record<ThemeId, ThemeConfig> = {
   },
   vintage: {
     id: "vintage",
-    name: "Vintage Poster",
-    subtitle: "Retro Portuguese Tile",
+    name: "Vintage",
+    subtitle: "Sun-Bleached Goa 1970s",
     isDark: false,
     colors: {
       bg: "#F4EFE6",
-      cardBg: "#FFFDF9",
+      cardBg: "rgba(255, 253, 249, 0.95)",
       text: "#2C1810",
       textSecondary: "rgba(44, 24, 16, 0.75)",
       accent: "#A83220",
-      accentGlow: "#A83220",
+      accentGlow: "#D4AF37",
       secondaryAccent: "#D4AF37",
-      border: "#A83220",
+      border: "rgba(168, 50, 32, 0.4)",
       focus: "#A83220",
       rimLight: "#D4AF37",
       stepperActive: "#A83220"
@@ -80,38 +80,38 @@ export const THEMES: Record<ThemeId, ThemeConfig> = {
   sakura: {
     id: "sakura",
     name: "Sakura",
-    subtitle: "Cherry Blossom Sunset",
+    subtitle: "Blossom Pink Matrix",
     isDark: false,
     colors: {
       bg: "#FDF2F4",
-      cardBg: "#FFFFFF",
-      text: "#2B0914",
-      textSecondary: "rgba(43, 9, 20, 0.75)",
+      cardBg: "rgba(255, 255, 255, 0.96)",
+      text: "#2A0812",
+      textSecondary: "rgba(42, 8, 18, 0.75)",
       accent: "#C92A54",
-      accentGlow: "#C92A54",
+      accentGlow: "#FF85A2",
       secondaryAccent: "#E86A92",
-      border: "#C92A54",
+      border: "rgba(201, 42, 84, 0.4)",
       focus: "#C92A54",
-      rimLight: "#E86A92",
+      rimLight: "#FF85A2",
       stepperActive: "#C92A54"
     }
   },
   synthwave: {
     id: "synthwave",
     name: "Synthwave",
-    subtitle: "Outrun 80s Sunset Grid",
+    subtitle: "Outrun Sunset Grid",
     isDark: true,
     colors: {
       bg: "#120024",
-      cardBg: "rgba(18, 0, 36, 0.95)",
-      text: "#FF0055",
-      textSecondary: "rgba(255, 0, 85, 0.8)",
-      accent: "#3A0057",
-      accentGlow: "#FF0055",
+      cardBg: "rgba(25, 5, 45, 0.92)",
+      text: "#FFE500",
+      textSecondary: "rgba(255, 229, 0, 0.75)",
+      accent: "#FF0055",
+      accentGlow: "#00F0FF",
       secondaryAccent: "#00F0FF",
       border: "rgba(255, 0, 85, 0.5)",
-      focus: "#FF0055",
-      rimLight: "#00F0FF",
+      focus: "#00F0FF",
+      rimLight: "#FF0055",
       stepperActive: "#FF0055"
     }
   }

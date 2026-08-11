@@ -1,20 +1,19 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
 
 interface WordmarkProps {
   size?: "sm" | "md" | "lg" | "hero";
   live?: boolean;
   className?: string;
   waveColor?: string;
+  goldColor?: string;
 }
 
 export function Wordmark({
   size = "md",
-  live = false,
   className = "",
-  waveColor = "#7CFF6B"
+  waveColor = "#7CFF6B",
 }: WordmarkProps) {
   const sizeClasses = {
     sm: { hh: "text-base sm:text-lg", goa: "text-2xl sm:text-3xl", devW: 42, devH: 18, waveH: 12 },
@@ -24,22 +23,11 @@ export function Wordmark({
   }[size];
 
   return (
-    <motion.div
-      animate={live ? { scale: [1, 1.015, 1] } : undefined}
-      transition={live ? { duration: 4, repeat: Infinity, ease: "easeInOut" } : undefined}
-      className={`inline-flex flex-col items-center select-none ${className}`}
-    >
-      {/* Main Lockup Row */}
-      <div className="relative inline-flex items-baseline gap-2 leading-none">
-        {/* Monospace Bold "HACKER HOUSE" in Pure WHITE */}
-        <span className={`font-mono font-black tracking-tighter text-white drop-shadow-md ${sizeClasses.hh}`}>
-          HACKER HOUSE
-        </span>
-
-        {/* Display Condensed "GOA" with Neon Pink Devanagari Goa Sticker Badge */}
-        <div className="relative inline-flex items-baseline">
-          {/* Neon Pink Rotated Sticker Badge */}
-          <div className="absolute -top-5 sm:-top-6 left-1/2 -translate-x-1/2 -rotate-6 px-2 py-0.5 rounded-md bg-[#FF007A] text-[#FFE600] border border-[#FF69B4] shadow-[0_0_15px_rgba(255,0,122,0.85)] pointer-events-none font-bold text-xs z-10 flex items-center justify-center">
+    <div className={`wordmark-lockup ${className}`}>
+      <div className="wordmark-row">
+        <span className="wordmark-hh">HACKER HOUSE</span>
+        <div className="wordmark-goa-wrapper">
+          <div className="wordmark-sticker-badge">
             <svg
               width={sizeClasses.devW}
               height={sizeClasses.devH}
@@ -53,32 +41,20 @@ export function Wordmark({
               <path d="M 4 8 H 120 M 18 8 V 30 C 18 36 10 36 10 30 C 10 24 18 24 18 24 M 34 8 V 46 M 50 8 V 46 M 50 8 C 42 -8 34 -8 28 -6 M 85 8 V 46 M 85 24 C 72 24 72 38 85 38 M 105 8 V 46" />
             </svg>
           </div>
-
-          <span className={`font-serif font-black tracking-tight text-[#FFC24B] drop-shadow-lg ${sizeClasses.goa}`}>
-            GOA
-          </span>
+          <span className="wordmark-goa">GOA</span>
         </div>
       </div>
-
-      {/* Signal-Wave Animated Underline */}
-      <div className="w-full mt-0.5 overflow-visible max-w-[220px]">
-        <svg
-          viewBox="0 0 300 24"
-          fill="none"
-          className="w-full h-auto"
-          style={{ maxHeight: sizeClasses.waveH }}
-        >
-          <motion.path
+      <div className="wordmark-wave-wrapper">
+        <svg viewBox="0 0 300 24" fill="none" className="wordmark-wave-svg">
+          <path
             d="M 0 12 Q 37.5 2, 75 12 T 150 12 T 225 12 T 300 12"
             stroke={waveColor}
             strokeWidth="3.5"
             strokeLinecap="round"
-            initial={{ strokeDasharray: "300", strokeDashoffset: live ? "300" : "0" }}
-            animate={{ strokeDashoffset: 0 }}
-            transition={{ duration: 1.2, ease: "easeOut" }}
+            className="wordmark-wave-path"
           />
         </svg>
       </div>
-    </motion.div>
+    </div>
   );
 }

@@ -1,5 +1,7 @@
 {
-  "framework": "nextjs",
+  "version": 2,
+  "name": "hh-goa-2026-card-generator",
+  "cleanUrls": true,
   "headers": [
     {
       "source": "/assets/(.*)",

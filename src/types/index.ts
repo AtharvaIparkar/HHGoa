@@ -6,59 +6,56 @@ export type ThemeId =
   | "sakura"
   | "synthwave";
 
-export interface ThemeColors {
-  bg: string;
-  cardBg: string;
-  text: string;
-  textSecondary: string;
-  accent: string;
-  accentGlow: string;
-  secondaryAccent: string;
-  border: string;
-  focus: string;
-  rimLight: string;
-  stepperActive: string;
-}
-
 export interface ThemeConfig {
   id: ThemeId;
   name: string;
   subtitle: string;
   isDark: boolean;
-  colors: ThemeColors;
+  colors: {
+    bg: string;
+    cardBg: string;
+    text: string;
+    textSecondary: string;
+    accent: string;
+    accentGlow: string;
+    secondaryAccent: string;
+    border: string;
+    focus: string;
+    rimLight: string;
+    stepperActive: string;
+  };
 }
 
-export interface PhotoTransform {
+export type FormatType = "pfp" | "builder";
+
+export interface GeneratorState {
+  currentPage: 1 | 2 | 3;
+  isPreloading: boolean;
+  format: FormatType;
+  photoImg: HTMLImageElement | null;
   panX: number;
   panY: number;
   zoom: number;
-}
-
-export type PhotoFilter = 'none' | 'sunset' | 'cyber' | 'bw';
-
-export type CardFormat = 'pfp' | 'builder';
-
-export interface BuilderData {
-  name: string;
-  xHandle?: string;
+  filter: string;
+  isDragging: boolean;
+  dragStartX: number;
+  dragStartY: number;
+  userName: string;
+  xHandle: string;
   selectedBadges: string[];
   role: string;
   builderTitle: string;
   stackLocation: string;
   perks: string[];
-  idNumber: string;
+  theme: ThemeId;
+  builderId: string;
+  soundMuted: boolean;
 }
 
-export interface GeneratorState {
-  currentPage: 1 | 2 | 3;
-  isPreloading: boolean;
-  format: CardFormat;
-  photoImg: HTMLImageElement | null;
-  photoTransform: PhotoTransform;
-  filter: PhotoFilter;
-  isDragging: boolean;
-  dragStart: { x: number; y: number };
-  builder: BuilderData;
-  theme: ThemeId;
-  soundMuted: boolean;
+export interface BuilderData {
+  name: string;
+  xHandle?: string;
+  stack: string;
+  builderTitle: string;
+  idNumber?: string;
 }
