@@ -860,7 +860,7 @@ export default function Home() {
 
           <div className="wordmark-lockup">
             <div className="wordmark-row">
-              <span className="wordmark-hh">HACKER HOUSE</span>
+              <span className="wordmark-goa">HACKER HOUSE</span>
               <div className="wordmark-goa-wrapper">
                 <div className="wordmark-sticker-badge">
                   <svg width="44" height="18" viewBox="0 0 125 50" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
