@@ -626,17 +626,30 @@ export default function Home() {
     return () => { wrapper.removeEventListener('mousemove', onMove); wrapper.removeEventListener('mouseleave', onLeave); };
   }, [currentPage]);
 
-  // ─── DRAG PHOTO ───
+  // ─── DRAG PHOTO (MOUSE & TOUCH FOR MOBILE) ───
   useEffect(() => {
     const onMove = (e: MouseEvent) => {
       if (!isDragging) return;
       setPanX(e.clientX - dragStart.x);
       setPanY(e.clientY - dragStart.y);
     };
-    const onUp = () => setIsDragging(false);
+    const onTouchMove = (e: TouchEvent) => {
+      if (!isDragging || !e.touches[0]) return;
+      setPanX(e.touches[0].clientX - dragStart.x);
+      setPanY(e.touches[0].clientY - dragStart.y);
+    };
+    const onEnd = () => setIsDragging(false);
+
     window.addEventListener('mousemove', onMove);
-    window.addEventListener('mouseup', onUp);
-    return () => { window.removeEventListener('mousemove', onMove); window.removeEventListener('mouseup', onUp); };
+    window.addEventListener('mouseup', onEnd);
+    window.addEventListener('touchmove', onTouchMove, { passive: true });
+    window.addEventListener('touchend', onEnd);
+    return () => {
+      window.removeEventListener('mousemove', onMove);
+      window.removeEventListener('mouseup', onEnd);
+      window.removeEventListener('touchmove', onTouchMove);
+      window.removeEventListener('touchend', onEnd);
+    };
   }, [isDragging, dragStart]);
 
   // ─── HELPERS ───
@@ -696,7 +709,7 @@ export default function Home() {
       <div className={`preloader${!isPreloading ? ' hidden' : ''}`} id="preloader">
         <div className="preloader-goa-backdrop">
           <div className="poster-texture-overlay" />
-          <svg width="100%" height="100%" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+          <svg width="100%" height="100%" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
             <rect width="1440" height="900" fill="#026834" />
             <g className="villa-group" transform="translate(420, 220)">
               <rect x="80" y="220" width="440" height="200" fill="#FFF8EB" stroke="#011b0e" strokeWidth="5" />
@@ -810,9 +823,7 @@ export default function Home() {
               <span className="wordmark-goa">HACKER HOUSE</span>
               <div className="wordmark-goa-wrapper">
                 <div className="wordmark-sticker-badge">
-                  <svg width="44" height="18" viewBox="0 0 125 50" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M 4 8 H 120 M 18 8 V 30 C 18 36 10 36 10 30 C 10 24 18 24 18 24 M 34 8 V 46 M 50 8 V 46 M 50 8 C 42 -8 34 -8 28 -6 M 85 8 V 46 M 85 24 C 72 24 72 38 85 38 M 105 8 V 46" />
-                  </svg>
+                  <span className="wordmark-stamp-text">गोवा</span>
                 </div>
                 <span className="wordmark-goa">GOA</span>
               </div>
@@ -1042,11 +1053,12 @@ export default function Home() {
           </section>
 
           {/* Right: Live Preview */}
-          <section style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 16, position: 'sticky', top: 90 }}>
-            <div style={{ width: '100%', maxWidth: 440, borderRadius: 20, overflow: 'hidden', border: '3.5px solid var(--color-yellow)', boxShadow: 'var(--shadow-md)' }}>
+          <section className="live-preview-section">
+            <div className="canvas-preview-card">
               <canvas ref={formCanvasRef} id="formRenderCanvas"
-                style={{ width: '100%', height: 'auto', display: 'block', cursor: 'grab' }}
+                style={{ width: '100%', height: 'auto', display: 'block', cursor: 'grab', touchAction: 'none' }}
                 onMouseDown={(e) => { setIsDragging(true); setDragStart({ x: e.clientX - panX, y: e.clientY - panY }); }}
+                onTouchStart={(e) => { if (e.touches[0]) { setIsDragging(true); setDragStart({ x: e.touches[0].clientX - panX, y: e.touches[0].clientY - panY }); } }}
               />
             </div>
             <span className="live-preview-badge">Live Canvas Preview</span>
@@ -1069,7 +1081,9 @@ export default function Home() {
             <div className="canvas-wrapper">
               <div className="holographic-sheen" />
               <canvas ref={showcaseCanvasRef} id="showcaseCanvas"
+                style={{ touchAction: 'none' }}
                 onMouseDown={(e) => { setIsDragging(true); setDragStart({ x: e.clientX - panX, y: e.clientY - panY }); }}
+                onTouchStart={(e) => { if (e.touches[0]) { setIsDragging(true); setDragStart({ x: e.touches[0].clientX - panX, y: e.touches[0].clientY - panY }); } }}
               />
             </div>
           </div>
