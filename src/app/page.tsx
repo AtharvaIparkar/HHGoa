@@ -340,87 +340,19 @@ export default function Home() {
     resize();
     window.addEventListener('resize', resize);
 
-    const particles: { x: number; y: number; baseX: number; size: number; speedY: number; swaySpeed: number; swayAmp: number; color: string; alpha: number; twinkleSpeed: number }[] = [];
-    for (let i = 0; i < 85; i++) {
-      particles.push({
-        x: Math.random() * window.innerWidth,
-        y: Math.random() * window.innerHeight,
-        baseX: Math.random() * window.innerWidth,
-        size: Math.random() * 4 + 1.5,
-        speedY: Math.random() * 1.8 + 0.6,
-        swaySpeed: Math.random() * 0.03 + 0.01,
-        swayAmp: Math.random() * 25 + 10,
-        color: ['#FEE101', '#FFF8EB', '#39FF14', '#FF007A', '#FF9900'][Math.floor(Math.random() * 5)],
-        alpha: Math.random() * 0.8 + 0.2,
-        twinkleSpeed: Math.random() * 0.05 + 0.02,
-      });
-    }
-
     function renderHalftone() {
       if (!isPreloadingRef.current || !hCtx || !canvas) return;
       animTimeRef.current += 0.015;
-      const t = animTimeRef.current;
       const w = canvas.width;
       const h = canvas.height;
-      const cx = w / 2;
 
       hCtx.clearRect(0, 0, w, h);
-
-      const sunGrad = hCtx.createRadialGradient(cx, h * 0.42, 10, cx, h * 0.42, Math.min(w, h) * 0.55);
-      sunGrad.addColorStop(0, 'rgba(254, 225, 1, 0.55)');
-      sunGrad.addColorStop(0.4, 'rgba(255, 120, 0, 0.25)');
-      sunGrad.addColorStop(1, 'rgba(2, 104, 52, 0)');
-      hCtx.fillStyle = sunGrad;
-      hCtx.beginPath(); hCtx.arc(cx, h * 0.42, Math.min(w, h) * 0.55, 0, Math.PI * 2); hCtx.fill();
-
-      hCtx.save();
-      const wy1 = h * 0.76 + Math.sin(t) * 8;
-      const wy2 = h * 0.82 + Math.cos(t * 0.8) * 10;
-      hCtx.fillStyle = 'rgba(255, 248, 235, 0.18)';
-      hCtx.beginPath(); hCtx.moveTo(0, wy2);
-      hCtx.bezierCurveTo(w * 0.35, wy2 - 25, w * 0.65, wy2 + 25, w, wy2);
-      hCtx.lineTo(w, h); hCtx.lineTo(0, h); hCtx.closePath(); hCtx.fill();
-      hCtx.strokeStyle = 'rgba(254, 225, 1, 0.35)'; hCtx.lineWidth = 3.5;
-      hCtx.beginPath(); hCtx.moveTo(0, wy1);
-      hCtx.bezierCurveTo(w * 0.3, wy1 - 22, w * 0.7, wy1 + 22, w, wy1); hCtx.stroke();
-      hCtx.restore();
 
       drawPalmMotif(hCtx, 90, h * 0.28, 1.4, false);
       drawPalmMotif(hCtx, 160, h * 0.55, 1.1, false);
       drawPalmMotif(hCtx, w - 90, h * 0.28, 1.4, true);
       drawPalmMotif(hCtx, w - 160, h * 0.55, 1.1, true);
 
-      hCtx.save();
-      hCtx.translate(cx, h * 0.42);
-      const rayCount = 14;
-      const rayAngle = (Math.PI * 2) / rayCount;
-      const rayRotation = t * 0.15;
-      for (let i = 0; i < rayCount; i++) {
-        const angle = i * rayAngle + rayRotation;
-        hCtx.fillStyle = i % 2 === 0 ? 'rgba(254, 225, 1, 0.14)' : 'rgba(255, 140, 0, 0.08)';
-        hCtx.beginPath(); hCtx.moveTo(0, 0);
-        hCtx.arc(0, 0, Math.max(w, h) * 0.9, angle - rayAngle * 0.22, angle + rayAngle * 0.22);
-        hCtx.closePath(); hCtx.fill();
-      }
-      hCtx.restore();
-
-      for (let r = 1; r <= 4; r++) {
-        const ringRadius = (r * 110 + (t * 45) % 110);
-        hCtx.strokeStyle = r % 2 === 0 ? 'rgba(57, 255, 20, 0.22)' : 'rgba(254, 225, 1, 0.25)';
-        hCtx.lineWidth = 2.2;
-        hCtx.beginPath(); hCtx.arc(cx, h * 0.42, ringRadius, 0, Math.PI * 2); hCtx.stroke();
-      }
-
-      particles.forEach((p) => {
-        p.y -= p.speedY;
-        p.x = p.baseX + Math.sin(t * p.swaySpeed * 60) * p.swayAmp;
-        p.alpha = 0.3 + Math.abs(Math.sin(t * p.twinkleSpeed * 60)) * 0.6;
-        if (p.y < -10) { p.y = h + 10; p.baseX = Math.random() * w; }
-        hCtx.fillStyle = p.color;
-        hCtx.globalAlpha = p.alpha;
-        hCtx.beginPath(); hCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2); hCtx.fill();
-      });
-      hCtx.globalAlpha = 1;
       rafRef.current = requestAnimationFrame(renderHalftone);
     }
 
@@ -766,8 +698,6 @@ export default function Home() {
           <div className="poster-texture-overlay" />
           <svg width="100%" height="100%" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
             <rect width="1440" height="900" fill="#026834" />
-            <circle cx="720" cy="420" r="420" fill="#FEE101" opacity="0.22" />
-            <circle cx="720" cy="420" r="260" fill="#FF8C00" opacity="0.15" />
             <g className="villa-group" transform="translate(420, 220)">
               <rect x="80" y="220" width="440" height="200" fill="#FFF8EB" stroke="#011b0e" strokeWidth="5" />
               <rect x="70" y="340" width="460" height="80" fill="#FFF8EB" stroke="#011b0e" strokeWidth="5" />
@@ -786,6 +716,23 @@ export default function Home() {
               <path d="M60,210 L540,210 M80,190 L520,190 M100,175 L500,175" stroke="#011b0e" strokeWidth="3" />
               <polygon points="100,130 160,50 440,50 500,130" fill="#D9531E" stroke="#011b0e" strokeWidth="6" />
               <path d="M120,110 L480,110 M140,90 L460,90 M160,70 L440,70" stroke="#011b0e" strokeWidth="3" />
+            </g>
+
+            {/* Animated Goa Water Layer in Foreground (Positioned in front of the house) */}
+            <g className="splash-water-group">
+              <g className="splash-water-wave-1">
+                <path d="M 0,585 Q 180,570 360,585 T 720,585 T 1080,585 T 1440,585 Q 1620,570 1800,585 T 2160,585 T 2520,585 T 2880,585 L 2880,900 L 0,900 Z" fill="#014D33" stroke="#011b0e" strokeWidth="4" />
+              </g>
+              <g className="splash-water-wave-2">
+                <path d="M 0,608 Q 180,622 360,608 T 720,608 T 1080,608 T 1440,608 Q 1620,622 1800,608 T 2160,608 T 2520,608 T 2880,608 L 2880,900 L 0,900 Z" fill="#00796B" stroke="#011b0e" strokeWidth="4" />
+              </g>
+              <g className="splash-water-wave-3">
+                <path d="M 0,630 Q 180,615 360,630 T 720,630 T 1080,630 T 1440,630 Q 1620,615 1800,630 T 2160,630 T 2520,630 T 2880,630 L 2880,900 L 0,900 Z" fill="#00A896" stroke="#011b0e" strokeWidth="4" />
+              </g>
+              <g className="splash-water-ripple">
+                <path d="M 0,632 Q 180,617 360,632 T 720,632 T 1080,632 T 1440,632 Q 1620,617 1800,632 T 2160,632 T 2520,632 T 2880,632" fill="none" stroke="#FFF8EB" strokeWidth="3.5" opacity="0.7" strokeLinecap="round" />
+                <path d="M 0,660 Q 240,648 480,660 T 960,660 T 1440,660 Q 1680,648 1920,660 T 2400,660 T 2880,660" fill="none" stroke="#E0F2F1" strokeWidth="2.5" opacity="0.5" strokeLinecap="round" />
+              </g>
             </g>
             <g className="palm-left-group">
               <path d="M60,900 Q120,550 180,220" stroke="#011b0e" strokeWidth="26" fill="none" strokeLinecap="round" />

@@ -209,6 +209,54 @@ html, body {
   animation: palmSwayRight 8s ease-in-out infinite alternate;
 }
 
+/* SPLASH SCREEN MOVING WATER ANIMATION IN FOREGROUND */
+.splash-water-wave-1 {
+  animation: splashWaterMove1 14s linear infinite;
+  will-change: transform;
+}
+
+.splash-water-wave-2 {
+  animation: splashWaterMove2 10s linear infinite;
+  will-change: transform;
+}
+
+.splash-water-wave-3 {
+  animation: splashWaterMove3 8s linear infinite;
+  will-change: transform;
+}
+
+.splash-water-ripple {
+  animation: splashWaterMove1 12s linear infinite;
+  will-change: transform;
+}
+
+@keyframes splashWaterMove1 {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-1440px, 0, 0);
+  }
+}
+
+@keyframes splashWaterMove2 {
+  0% {
+    transform: translate3d(-1440px, 0, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes splashWaterMove3 {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-1440px, 0, 0);
+  }
+}
+
 @keyframes waveMotion {
   0% { transform: translateY(0) scaleY(1); }
   50% { transform: translateY(-10px) scaleY(1.04); }

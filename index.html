@@ -37,10 +37,6 @@
       <svg width="100%" height="100%" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
         <!-- Plain Deep Green Background -->
         <rect width="1440" height="900" fill="#026834" />
-        
-        <!-- Subtle Warm/Sunny Radial Glow -->
-        <circle cx="720" cy="420" r="420" fill="#FEE101" opacity="0.22" />
-        <circle cx="720" cy="420" r="260" fill="#FF8C00" opacity="0.15" />
 
         <!-- GOA BEACH HOUSE VILLA (Preserved Exactly) -->
         <g class="villa-group" transform="translate(420, 220)">
@@ -80,6 +76,23 @@
           <polygon points="100,130 160,50 440,50 500,130" fill="#D9531E" stroke="#011b0e" stroke-width="6" />
           <!-- Roof Line Details -->
           <path d="M120,110 L480,110 M140,90 L460,90 M160,70 L440,70" stroke="#011b0e" stroke-width="3" />
+        </g>
+
+        <!-- Animated Goa Water Layer in Foreground (Positioned in front of the house) -->
+        <g class="splash-water-group">
+          <g class="splash-water-wave-1">
+            <path d="M 0,585 Q 180,570 360,585 T 720,585 T 1080,585 T 1440,585 Q 1620,570 1800,585 T 2160,585 T 2520,585 T 2880,585 L 2880,900 L 0,900 Z" fill="#014D33" stroke="#011b0e" stroke-width="4" />
+          </g>
+          <g class="splash-water-wave-2">
+            <path d="M 0,608 Q 180,622 360,608 T 720,608 T 1080,608 T 1440,608 Q 1620,622 1800,608 T 2160,608 T 2520,608 T 2880,608 L 2880,900 L 0,900 Z" fill="#00796B" stroke="#011b0e" stroke-width="4" />
+          </g>
+          <g class="splash-water-wave-3">
+            <path d="M 0,630 Q 180,615 360,630 T 720,630 T 1080,630 T 1440,630 Q 1620,615 1800,630 T 2160,630 T 2520,630 T 2880,630 L 2880,900 L 0,900 Z" fill="#00A896" stroke="#011b0e" stroke-width="4" />
+          </g>
+          <g class="splash-water-ripple">
+            <path d="M 0,632 Q 180,617 360,632 T 720,632 T 1080,632 T 1440,632 Q 1620,617 1800,632 T 2160,632 T 2520,632 T 2880,632" fill="none" stroke="#FFF8EB" stroke-width="3.5" opacity="0.7" stroke-linecap="round" />
+            <path d="M 0,660 Q 240,648 480,660 T 960,660 T 1440,660 Q 1680,648 1920,660 T 2400,660 T 2880,660" fill="none" stroke="#E0F2F1" stroke-width="2.5" opacity="0.5" stroke-linecap="round" />
+          </g>
         </g>
 
         <!-- Lush Green Palm Trees (Left Side - Preserved Exactly) -->

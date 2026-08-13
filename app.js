@@ -257,23 +257,6 @@
     resize();
     window.addEventListener('resize', resize);
 
-    // Tropical shimmer sparkle particles for splash intro
-    const particles = [];
-    for (let i = 0; i < 85; i++) {
-      particles.push({
-        x: Math.random() * window.innerWidth,
-        y: Math.random() * window.innerHeight,
-        baseX: Math.random() * window.innerWidth,
-        size: Math.random() * 4 + 1.5,
-        speedY: Math.random() * 1.8 + 0.6,
-        swaySpeed: Math.random() * 0.03 + 0.01,
-        swayAmp: Math.random() * 25 + 10,
-        color: ['#FEE101', '#FFF8EB', '#39FF14', '#FF007A', '#FF9900'][Math.floor(Math.random() * 5)],
-        alpha: Math.random() * 0.8 + 0.2,
-        twinkleSpeed: Math.random() * 0.05 + 0.02
-      });
-    }
-
     function renderHalftone() {
       if (!state.isPreloading) {
         return; // Stop rendering when splash screen hides
@@ -282,107 +265,14 @@
       animationTime += 0.015;
       const w = halftoneCanvas.width;
       const h = halftoneCanvas.height;
-      const centerX = w / 2;
-      const centerY = h / 2;
 
       hCtx.clearRect(0, 0, w, h);
 
-      // ABSTRACT GOA SUNNY BEACH & VILLA BACKDROP (Reference Image Inspired)
-      // 1. Warm Sunset/Sunlight Glow
-      const sunGrad = hCtx.createRadialGradient(centerX, h * 0.42, 10, centerX, h * 0.42, Math.min(w, h) * 0.55);
-      sunGrad.addColorStop(0, 'rgba(254, 225, 1, 0.55)'); // Goa Yellow Glow
-      sunGrad.addColorStop(0.4, 'rgba(255, 120, 0, 0.25)'); // Warm Sunset Orange
-      sunGrad.addColorStop(1, 'rgba(2, 104, 52, 0)');
-      hCtx.fillStyle = sunGrad;
-      hCtx.beginPath();
-      hCtx.arc(centerX, h * 0.42, Math.min(w, h) * 0.55, 0, Math.PI * 2);
-      hCtx.fill();
-
-      // 2. Abstract Ocean Wave & Cream Sand Curves at Bottom
-      hCtx.save();
-      const waveY1 = h * 0.76 + Math.sin(animationTime) * 8;
-      const waveY2 = h * 0.82 + Math.cos(animationTime * 0.8) * 10;
-
-      // Cream Beach Sand Shoreline
-      hCtx.fillStyle = 'rgba(255, 248, 235, 0.18)';
-      hCtx.beginPath();
-      hCtx.moveTo(0, waveY2);
-      hCtx.bezierCurveTo(w * 0.35, waveY2 - 25, w * 0.65, waveY2 + 25, w, waveY2);
-      hCtx.lineTo(w, h);
-      hCtx.lineTo(0, h);
-      hCtx.closePath();
-      hCtx.fill();
-
-      // Ocean Wave Lines
-      hCtx.strokeStyle = 'rgba(254, 225, 1, 0.35)';
-      hCtx.lineWidth = 3.5;
-      hCtx.beginPath();
-      hCtx.moveTo(0, waveY1);
-      hCtx.bezierCurveTo(w * 0.3, waveY1 - 22, w * 0.7, waveY1 + 22, w, waveY1);
-      hCtx.stroke();
-
-      hCtx.strokeStyle = 'rgba(255, 0, 122, 0.25)';
-      hCtx.lineWidth = 2.5;
-      hCtx.beginPath();
-      hCtx.moveTo(0, waveY1 + 35);
-      hCtx.bezierCurveTo(w * 0.4, waveY1 + 15, w * 0.8, waveY1 + 45, w, waveY1 + 30);
-      hCtx.stroke();
-      hCtx.restore();
-
-      // 3. Tropical Palm Frond Silhouettes Framing Left & Right Edges (Matching Reference Photo)
       drawPalmMotif(hCtx, 90, h * 0.28, 1.4, false);
       drawPalmMotif(hCtx, 160, h * 0.55, 1.1, false);
       drawPalmMotif(hCtx, w - 90, h * 0.28, 1.4, true);
       drawPalmMotif(hCtx, w - 160, h * 0.55, 1.1, true);
 
-      // 1. ROTATING SUNBURST LIGHT RAYS (Emanating from Sunset Horizon)
-      hCtx.save();
-      hCtx.translate(centerX, h * 0.42);
-      const rayCount = 14;
-      const rayAngle = (Math.PI * 2) / rayCount;
-      const rayRotation = animationTime * 0.15;
-
-      for (let i = 0; i < rayCount; i++) {
-        const angle = i * rayAngle + rayRotation;
-        hCtx.fillStyle = i % 2 === 0 ? 'rgba(254, 225, 1, 0.14)' : 'rgba(255, 140, 0, 0.08)';
-        hCtx.beginPath();
-        hCtx.moveTo(0, 0);
-        hCtx.arc(0, 0, Math.max(w, h) * 0.9, angle - rayAngle * 0.22, angle + rayAngle * 0.22);
-        hCtx.closePath();
-        hCtx.fill();
-      }
-      hCtx.restore();
-
-      // 2. EXPANDING OCEAN & SUN CONCENTRIC PULSE RINGS
-      for (let r = 1; r <= 4; r++) {
-        const ringRadius = (r * 110 + (animationTime * 45) % 110);
-        hCtx.strokeStyle = r % 2 === 0 ? 'rgba(57, 255, 20, 0.22)' : 'rgba(254, 225, 1, 0.25)';
-        hCtx.lineWidth = 2.2;
-        hCtx.beginPath();
-        hCtx.arc(centerX, h * 0.42, ringRadius, 0, Math.PI * 2);
-        hCtx.stroke();
-      }
-
-      // 3. RISING TROPICAL SHIMMER & LIGHT SPARKLES (Rising from Beach toward Sky)
-      particles.forEach((p) => {
-        p.y -= p.speedY;
-        p.x = p.baseX + Math.sin(animationTime * p.swaySpeed * 60) * p.swayAmp;
-        p.alpha = 0.3 + Math.abs(Math.sin(animationTime * p.twinkleSpeed * 60)) * 0.6;
-
-        // Reset to bottom when rising past top screen
-        if (p.y < -10) {
-          p.y = h + 10;
-          p.baseX = Math.random() * w;
-        }
-
-        hCtx.fillStyle = p.color;
-        hCtx.globalAlpha = p.alpha;
-        hCtx.beginPath();
-        hCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        hCtx.fill();
-      });
-
-      hCtx.globalAlpha = 1;
       requestAnimationFrame(renderHalftone);
     }
 
